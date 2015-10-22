@@ -94,7 +94,7 @@
 		.on('click.bs.visorcarousel.data-api', '[data-slide-to]', clickHandler);
 
 	$(window).on('load', function () {
-		$('[data-ride="carousel"]').each(function () {
+		$('[data-ride="visor"]').each(function () {
 			var $carousel = $(this);
 			Plugin.call($carousel, $carousel.data());
 		});
