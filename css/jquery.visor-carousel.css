@@ -129,6 +129,10 @@
 	overflow: hidden;
 }
 
+.visor-carousel .visor-wrapper > .carousel-inner {
+	position: relative;
+}
+
 .visor-carousel .visor-wrapper > .carousel-inner > .item:after {
 	content: '';
 	display: block;

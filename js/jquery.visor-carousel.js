@@ -18,6 +18,7 @@
 		this.interval		= null;
 		this.$active		= null;
 		this.$items			= null;
+		this.layout			= null; // 'landscape', 'portrait'
 
 		if (this.$itemsParent.children('.item.active').length > 0) {
 			this.$active = this.$itemsParent.children('.item.active').first();
@@ -79,15 +80,24 @@
 				var maxWidth = 0;
 				self.$wrapper.addClass('force-width');
 				self.$itemsParent.width(''); // clear parent width
+
 				self.$items.each(function() {
 					var $this = $(this);
 					$this.width(''); // clear calculated width
 					$this.width($this.width());
 					maxWidth += $this.outerWidth(true);
 				});
+
 				self.$itemsParent.width(maxWidth);
 				self.$wrapper.removeClass('force-width');
-			}, 250);
+
+				// checking layout after redraw
+				self.layout = getLayout.call(self);
+				self.$element.data('layout', self.layout);
+
+				// aligning
+				focusTo.call(self, self.$active);
+			}, 150);
 		};
 		resizehandler();
 		$(window).resize(resizehandler);
@@ -110,6 +120,90 @@
 		keyboard: true,
 		align: 'center' // 'top-left', 'center', 'bottom-right'
 	};
+
+	// UTILITY FUNCTIONS DEFINITION
+	// ============================
+
+	function getLayout() {
+		if (this.$items.length <= 1) {
+			return 'landscape';
+		} else {
+			if (this.$itemsParent.children('.item:first-child').offset().top == this.$itemsParent.children('.item:nth-child(2)').offset().top) {
+				this.$itemsParent.css({
+					'top': '',
+					'bottom': ''
+				});
+				return 'landscape';
+			}
+
+			this.$itemsParent.css({
+				'left': '',
+				'right': ''
+			});
+			return 'portrait';
+		}
+	}
+
+	function focusTo($item) {
+		var spaceBeforeActive = 0,
+			spaceAfterActive = 0,
+			itemSpace = 0,
+			wrapperSpace = 0,
+			self = this;
+
+		this.$itemsParent.children('.item.active').removeClass('active');
+		$item.addClass('active');
+
+		var isActiveReached = false;
+		this.$itemsParent.children('.item').each(function() {
+			var fn = 'outerHeight',
+				$this = $(this);
+			if (self.layout == 'landscape') {
+				fn = 'outerWidth';
+			}
+			if (!isActiveReached) {
+				if ($this.hasClass('active')) {
+					itemSpace = $this[fn]();
+					wrapperSpace = self.$wrapper[fn == 'outerHeight'? 'height' : 'width']();
+					isActiveReached = true;
+					return;
+				}
+				spaceBeforeActive += $this[fn]();
+			} else {
+				spaceAfterActive += $this[fn]();
+			}
+		});
+
+		var cssProperty;
+		switch (this.options.align) {
+			case 'top-left': {
+				cssProperty = 'top';
+				if (this.layout == 'landscape') {
+					cssProperty = 'left';
+				}
+				this.$itemsParent.css(cssProperty, '-' + spaceBeforeActive + 'px');
+				break;
+			}
+			case 'bottom-right': {
+				cssProperty = 'bottom';
+				if (this.layout == 'landscape') {
+					cssProperty = 'right';
+				}
+				this.$itemsParent.css(cssProperty, '-' + spaceAfterActive + 'px');
+				break;
+			}
+			default:
+			case 'center': {
+				cssProperty = 'top';
+				if (this.layout == 'landscape') {
+					cssProperty = 'left';
+				}
+				this.$itemsParent.css(cssProperty, '-' + Math.round(((spaceBeforeActive + spaceAfterActive + itemSpace) / 2) - (wrapperSpace / 2)) + 'px');
+				break;
+			}
+		}
+
+	}
 
 	// VISOR CAROUSEL PLUGIN DEFINITION
 	// ================================
