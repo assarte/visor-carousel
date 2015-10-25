@@ -129,10 +129,85 @@
 	overflow: hidden;
 }
 
+.visor-carousel:not([data-layout]) .visor-wrapper > .carousel-inner {
+	display: inline-block;
+	white-space: nowrap;
+}
 .visor-carousel .visor-wrapper > .carousel-inner {
 	position: relative;
+	width: initial;
+	display: block;
+	white-space: normal;
+	overflow: visible;
+}
+@media (min-width: 768px) {
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner {
+		display: inline-block;
+		white-space: nowrap;
+	}
+}
+@media (min-width: 992px) {
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner {
+		display: inline-block;
+		white-space: nowrap;
+	}
+}
+@media (min-width: 1200px) {
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner {
+		display: inline-block;
+		white-space: nowrap;
+	}
 }
 
+.visor-carousel .carousel-inner > div.item,
+.visor-carousel .carousel-inner > div.item.active {
+	display: inline-block;
+	overflow: hidden;
+	white-space: normal;
+	float: none;
+}
+.visor-carousel .visor-wrapper > .carousel-inner > .item:not(.anim-off) {
+	transition: width 0.6s ease-in-out, height 0.6s ease-in-out, padding 0.6s ease-in-out, margin 0.6s ease-in-out, border-width 0.6s ease-in-out, outline-width 0.6s ease-in-out;
+}
+/*
+.visor-carousel[data-layout="portrait"] .carousel-inner > div.item,
+.visor-carousel[data-layout="portrait"] .carousel-inner > div.item.active {
+	white-space: normal;
+	display: block;
+}
 .visor-carousel .visor-wrapper > .carousel-inner > .item:after {
 	content: '';
 	display: block;
@@ -143,8 +218,31 @@
 	width: 100%;
 	overflow: hidden;
 }
+*/
+.visor-carousel .visor-wrapper > .carousel-inner .item.quick {
+	transition: all 0s ease; /* override animation */
+}
 
-.visor-carousel .visor-wrapper.force-width > .carousel-inner {
-	width: 100%;
+.visor-carousel .visor-wrapper > .carousel-inner .item.shrink {
 	overflow: hidden;
 }
+/*
+.visor-carousel[data-layout="landscape"] .visor-wrapper > .carousel-inner .item.shrink {
+	width: 0;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+}
+.visor-carousel[data-layout="portrait"] .visor-wrapper > .carousel-inner .item.shrink {
+	height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	border-top-width: 0;
+	border-bottom-width: 0;
+}
+*/

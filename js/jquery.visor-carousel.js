@@ -52,10 +52,11 @@
 		if (this.$itemsParent.children('.item').length > 1) {
 			var isActiveReached = false;
 
-			this.$itemsParent.children('.item').each(function () {
+			this.$itemsParent.children('.item').each(function(idx) {
 				var $this = $(this),
 					prev = self.$itemsParent.children('.item.active').prev();
 
+				$this.attr('data-iid', idx);
 				if (!isActiveReached) {
 					if ($this.hasClass('active')) {
 						isActiveReached = true;
@@ -74,26 +75,28 @@
 		}
 		this.$items = this.$itemsParent.children('.item');
 
+		// emulating CSS parent selector for getting proper breakpoints
+		this.$items.each(function() {
+			if ($(this).is('.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12')) {
+				self.$element.addClass('col-xs');
+			}
+			if ($(this).is('.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12')) {
+				self.$element.addClass('col-sm');
+			}
+			if ($(this).is('.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12')) {
+				self.$element.addClass('col-md');
+			}
+			if ($(this).is('.col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12')) {
+				self.$element.addClass('col-lg');
+			}
+		});
+
 		// manage viewport resize
 		var resizehandler = function() {
 			setTimeout(function() {
-				var maxWidth = 0;
-				self.$wrapper.addClass('force-width');
-				self.$itemsParent.width(''); // clear parent width
-
-				self.$items.each(function() {
-					var $this = $(this);
-					$this.width(''); // clear calculated width
-					$this.width($this.width());
-					maxWidth += $this.outerWidth(true);
-				});
-
-				self.$itemsParent.width(maxWidth);
-				self.$wrapper.removeClass('force-width');
-
 				// checking layout after redraw
 				self.layout = getLayout.call(self);
-				self.$element.data('layout', self.layout);
+				self.$element.attr('data-layout', self.layout);
 
 				// aligning
 				focusTo.call(self, self.$active);
@@ -124,11 +127,16 @@
 	// UTILITY FUNCTIONS DEFINITION
 	// ============================
 
+	function px2num(px) {
+		if (!px) return 0;
+		return Math.round(parseFloat(px.replace('px', '')));
+	}
+
 	function getLayout() {
 		if (this.$items.length <= 1) {
 			return 'landscape';
 		} else {
-			if (this.$itemsParent.children('.item:first-child').offset().top == this.$itemsParent.children('.item:nth-child(2)').offset().top) {
+			if (this.$itemsParent.children('.item:first-child').offset().top == this.$itemsParent.children('.item:last-child').offset().top) {
 				this.$itemsParent.css({
 					'top': '',
 					'bottom': ''
@@ -202,8 +210,30 @@
 				break;
 			}
 		}
-
 	}
+
+	VisorCarousel.prototype.slideTo = function($item) {
+		if ($item.length != 1) return;
+		if ($item.hasClass('active')) return;
+
+		var selectedIid = this.$items.index($item),
+			activeIid = this.$itemsParent.children().index('.active'),
+			isBackward = (activeIid > selectedIid),
+			distance = 0,
+			cssProperty = (this.layout == 'landscape'? 'width' : 'height'),
+			$items = this.$items;
+
+		if (!isBackward) {
+			distance = selectedIid - activeIid;
+		} else {
+			distance = activeIid - selectedIid;
+			$items = $($items.get().reverse());
+		}
+
+		$items.each(function() {
+
+		});
+	};
 
 	// VISOR CAROUSEL PLUGIN DEFINITION
 	// ================================
