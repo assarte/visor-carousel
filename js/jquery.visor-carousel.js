@@ -349,6 +349,7 @@
 	};
 
 	VisorCarousel.prototype.isSlidingDisabled = function() {
+		if (this._userAction) return false;
 		return this.disabledSliding;
 	};
 
@@ -408,6 +409,7 @@
 					}
 				}
 			}
+			obj._userAction = false;
 			if (options.interval == 0) {
 				obj.pause();
 			} else {
@@ -443,6 +445,7 @@
 		var slideIndex = $this.attr('data-slide-to') || $this.attr('data-slide-by') || $this.attr('data-slide') || false;
 		if (slideIndex) options.interval = false;
 
+		$target.data('bs.visorcarousel')._userAction = true;
 		Plugin.call($target, options);
 
 		e.preventDefault();
