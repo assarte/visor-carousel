@@ -47,30 +47,18 @@
 		this.$itemsParent.wrap('<div class="visor-wrapper" data-visor-align="' + options.align + '">');
 		this.$wrapper = this.$itemsParent.parent();
 
-		// multiplying items to balance the list
+		// multiplying items for 'center'-view to balance the list
 		var self = this;
-		if (this.$itemsParent.children('.item').length > 1) {
-			var isActiveReached = false;
-
+		if (this.options.align == 'center' && this.$itemsParent.children('.item').length > 1) {
 			this.$itemsParent.children('.item').each(function(idx) {
-				var $this = $(this),
-					prev = self.$itemsParent.children('.item.active').prev();
+				$(this).attr('data-iid', idx);
+			});
 
-				$this.attr('data-iid', idx);
-				if (!isActiveReached) {
-					if ($this.hasClass('active')) {
-						isActiveReached = true;
-						return;
-					}
+			var originalCollection = this.$itemsParent.children('.item'),
+				firstChild = this.$itemsParent.children(':first-child');
 
-					$this.clone().appendTo(self.$itemsParent);
-				} else {
-					if (prev.length == 0) {
-						$this.clone().prependTo(self.$itemsParent);
-					} else {
-						$this.clone().insertAfter(prev);
-					}
-				}
+			originalCollection.each(function() {
+				$(this).clone().insertBefore(firstChild);
 			});
 		}
 		this.$items = this.$itemsParent.children('.item');
@@ -121,7 +109,32 @@
 		pause: 'hover',
 		wrap: true,
 		keyboard: true,
-		align: 'center' // 'top-left', 'center', 'bottom-right'
+		align: 'center', // 'top-left', 'center', 'bottom-right',
+		anim: 'flip-in-out'
+	};
+
+	VisorCarousel.ANIMATIONS = {
+		'flip-in-out': {
+			fold: function(visor, $item) {
+				var $result;
+				$result = $item.addClass('fold').addClass('anim-flip-in-out').clone();
+				$result._visor_original = $item;
+				onAnimationEndOnce($item, function() {
+					setTimeout(function() {
+						$result.removeClass('raise').removeClass('anim-flip-in-out');
+						$item.detach();
+					}, 150); // awaiting for previous await and a bit more for sure
+				});
+				return $result;
+			},
+			raise: function(visor, $item) {
+				$item.addClass('raise');
+				setTimeout(function() {
+					$item.removeClass('fold');
+				}, 100); // awaiting for node to be placed on DOM
+				return $item;
+			}
+		}
 	};
 
 	// UTILITY FUNCTIONS DEFINITION
@@ -130,6 +143,11 @@
 	function px2num(px) {
 		if (!px) return 0;
 		return Math.round(parseFloat(px.replace('px', '')));
+	}
+
+	function onAnimationEndOnce($el, cb) {
+		$el.one('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', cb);
+		return $el;
 	}
 
 	function getLayout() {
@@ -206,7 +224,7 @@
 				if (this.layout == 'landscape') {
 					cssProperty = 'left';
 				}
-				this.$itemsParent.css(cssProperty, '-' + Math.round(((spaceBeforeActive + spaceAfterActive + itemSpace) / 2) - (wrapperSpace / 2)) + 'px');
+				this.$itemsParent.css(cssProperty, '-' + Math.round(((spaceBeforeActive + spaceAfterActive) / 2) - (wrapperSpace / 2)) - itemSpace + 'px');
 				break;
 			}
 		}
@@ -217,11 +235,13 @@
 		if ($item.hasClass('active')) return;
 
 		var selectedIid = this.$items.index($item),
-			activeIid = this.$itemsParent.children().index('.active'),
+			activeIid = this.$items.index(this.$items.filter('.active')),
 			isBackward = (activeIid > selectedIid),
 			distance = 0,
-			cssProperty = (this.layout == 'landscape'? 'width' : 'height'),
-			$items = this.$items;
+			$items = this.$items,
+			steps = 0, $lastItem,
+			anim = this.options.anim,
+			self = this;
 
 		if (!isBackward) {
 			distance = selectedIid - activeIid;
@@ -230,8 +250,25 @@
 			$items = $($items.get().reverse());
 		}
 
+		var $toActive = $item;
 		$items.each(function() {
+			if (steps >= distance) {
+				onAnimationEndOnce($lastItem, function() {
+					setTimeout(function() {
+						focusTo.call(self, $toActive); // selecting new active and make focused in view
+					}, 250);
+				});
+				return false;
+			}
+			var $item = $lastItem = $($items.get(0));
 
+			$item = VisorCarousel.ANIMATIONS[anim].fold(self, $item);
+			if (!isBackward) {
+				$item = VisorCarousel.ANIMATIONS[anim].raise(self, $item.appendTo(self.$itemsParent));
+			} else {
+				$item = VisorCarousel.ANIMATIONS[anim].raise(self, $item.prependTo(self.$itemsParent));
+			}
+			steps++;
 		});
 	};
 

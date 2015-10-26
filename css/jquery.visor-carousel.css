@@ -139,6 +139,7 @@
 	display: block;
 	white-space: normal;
 	overflow: visible;
+	transition: top 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out, bottom 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, border-width 0.3s ease-in-out, outline-width 0.3s ease-in-out;
 }
 @media (min-width: 768px) {
 	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
@@ -199,35 +200,13 @@
 	white-space: normal;
 	float: none;
 }
-.visor-carousel .visor-wrapper > .carousel-inner > .item:not(.anim-off) {
+.visor-carousel .visor-wrapper > .carousel-inner > .item.no-anim {
+	transition: all 0s ease !important;
+}
+.visor-carousel .visor-wrapper > .carousel-inner > .item.anim-flip-in-out {
 	transition: width 0.6s ease-in-out, height 0.6s ease-in-out, padding 0.6s ease-in-out, margin 0.6s ease-in-out, border-width 0.6s ease-in-out, outline-width 0.6s ease-in-out;
 }
-/*
-.visor-carousel[data-layout="portrait"] .carousel-inner > div.item,
-.visor-carousel[data-layout="portrait"] .carousel-inner > div.item.active {
-	white-space: normal;
-	display: block;
-}
-.visor-carousel .visor-wrapper > .carousel-inner > .item:after {
-	content: '';
-	display: block;
-	position: static;
-	clear: both;
-	float: none;
-	height: 0;
-	width: 100%;
-	overflow: hidden;
-}
-*/
-.visor-carousel .visor-wrapper > .carousel-inner .item.quick {
-	transition: all 0s ease; /* override animation */
-}
-
-.visor-carousel .visor-wrapper > .carousel-inner .item.shrink {
-	overflow: hidden;
-}
-/*
-.visor-carousel[data-layout="landscape"] .visor-wrapper > .carousel-inner .item.shrink {
+.visor-carousel[data-layout="landscape"] .visor-wrapper > .carousel-inner > .item.anim-flip-in-out.fold {
 	width: 0;
 	padding-left: 0;
 	padding-right: 0;
@@ -236,7 +215,7 @@
 	border-left-width: 0;
 	border-right-width: 0;
 }
-.visor-carousel[data-layout="portrait"] .visor-wrapper > .carousel-inner .item.shrink {
+.visor-carousel[data-layout="portrait"] .visor-wrapper > .carousel-inner > .item.anim-flip-in-out.fold {
 	height: 0;
 	padding-top: 0;
 	padding-bottom: 0;
@@ -245,4 +224,6 @@
 	border-top-width: 0;
 	border-bottom-width: 0;
 }
-*/
+.visor-carousel .visor-wrapper > .carousel-inner .item.quick {
+	transition: all 0s ease; /* override animation */
+}
