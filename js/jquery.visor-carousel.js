@@ -19,6 +19,8 @@
 		this.$active		= null;
 		this.$items			= null;
 		this.layout			= null; // 'landscape', 'portrait'
+		this.disabledControls	= true;
+		this.disabledSliding	= true;
 
 		if (this.$itemsParent.children('.item.active').length > 0) {
 			this.$active = this.$itemsParent.children('.item.active').first();
@@ -80,6 +82,7 @@
 		});
 
 		// manage viewport resize
+		var isInitialResize = true;
 		var resizehandler = function() {
 			setTimeout(function() {
 				// checking layout after redraw
@@ -88,6 +91,10 @@
 
 				// aligning
 				focusTo.call(self, self.$active);
+				if (isInitialResize) {
+					self.enableSliding();
+					isInitialResize = false;
+				}
 			}, 150);
 		};
 		resizehandler();
@@ -233,6 +240,7 @@
 	VisorCarousel.prototype.slideTo = function($item) {
 		if ($item.length != 1) return;
 		if ($item.hasClass('active')) return;
+		if (this.disableSliding()) return;
 
 		var selectedIid = this.$items.index($item),
 			activeIid = this.$items.index(this.$items.filter('.active')),
@@ -251,11 +259,13 @@
 		}
 
 		var $toActive = $item;
+		this.disableControls();
 		$items.each(function() {
 			if (steps >= distance) {
 				onAnimationEndOnce($lastItem, function() {
 					setTimeout(function() {
 						focusTo.call(self, $toActive); // selecting new active and make focused in view
+						self.enableControls();
 					}, 250);
 				});
 				return false;
@@ -270,6 +280,30 @@
 			}
 			steps++;
 		});
+	};
+
+	VisorCarousel.prototype.enableControls = function() {
+		this.disabledControls = false;
+	};
+
+	VisorCarousel.prototype.disableControls = function () {
+		this.disabledControls = true;
+	};
+
+	VisorCarousel.prototype.isControlsDisabled = function() {
+		return this.disabledControls;
+	};
+
+	VisorCarousel.prototype.enableSliding = function() {
+		this.disabledSliding = false;
+	};
+
+	VisorCarousel.prototype.disableSliding = function() {
+		this.disabledSliding = true;
+	};
+
+	VisorCarousel.prototype.isSlidingDisabled = function() {
+		return this.disabledSliding;
 	};
 
 	// VISOR CAROUSEL PLUGIN DEFINITION

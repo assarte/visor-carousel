@@ -121,8 +121,12 @@
 /*
   VISOR STYLES
   ============
-
 */
+
+/* slides layout */
+.visor-carousel {
+	position: relative;
+}
 
 .visor-carousel .visor-wrapper {
 	width: 100%;
@@ -203,6 +207,8 @@
 .visor-carousel .visor-wrapper > .carousel-inner > .item.no-anim {
 	transition: all 0s ease !important;
 }
+
+/* slides animation: flip-in-out */
 .visor-carousel .visor-wrapper > .carousel-inner > .item.anim-flip-in-out {
 	transition: width 0.6s ease-in-out, height 0.6s ease-in-out, padding 0.6s ease-in-out, margin 0.6s ease-in-out, border-width 0.6s ease-in-out, outline-width 0.6s ease-in-out;
 }
@@ -226,4 +232,40 @@
 }
 .visor-carousel .visor-wrapper > .carousel-inner .item.quick {
 	transition: all 0s ease; /* override animation */
+}
+
+/* indicators layout */
+div.visor-carousel .carousel-indicators {
+	display: block;
+	list-style: none;
+	position: absolute;
+	bottom: 3em;
+	left: 0;
+	right: 0;
+	width: auto;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+div.visor-carousel .carousel-indicators > li {
+	display: inline-block;
+	vertical-align: middle;
+}
+div.visor-carousel .carousel-indicators > li.active:before {
+	background: rgba(255, 255, 255, 0.6);
+	width: 1em;
+	height: 1em;
+}
+div.visor-carousel .carousel-indicators > li:before {
+	content: '';
+	display: block;
+	width: 0.8em;
+	height: 0.8em;
+	background: transparent;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+	transition: width 0.3s ease, height 0.3s ease;
 }
