@@ -13,12 +13,12 @@
 		this.$itemsParent	= this.$element.find('.carousel-inner').first();
 		this.$wrapper		= null;
 		this.options		= options;
-		this.paused			= null;
-		this.sliding		= null;
 		this.interval		= null;
 		this.$active		= null;
 		this.$items			= null;
 		this.layout			= null; // 'landscape', 'portrait'
+		this.lastItemIid	= 0;
+		this.slidingTimer	= null;
 		this.disabledControls	= true;
 		this.disabledSliding	= true;
 
@@ -49,13 +49,14 @@
 		this.$itemsParent.wrap('<div class="visor-wrapper" data-visor-align="' + options.align + '">');
 		this.$wrapper = this.$itemsParent.parent();
 
-		// multiplying items for 'center'-view to balance the list
 		var self = this;
-		if (this.options.align == 'center' && this.$itemsParent.children('.item').length > 1) {
-			this.$itemsParent.children('.item').each(function(idx) {
-				$(this).attr('data-iid', idx);
-			});
+		this.$itemsParent.children('.item').each(function(idx) {
+			$(this).attr('data-iid', idx);
+			self.lastItemIid = idx;
+		});
 
+		// multiplying items for 'center'-view to balance the list
+		if (this.options.align == 'center' && this.$itemsParent.children('.item').length > 1) {
 			var originalCollection = this.$itemsParent.children('.item'),
 				firstChild = this.$itemsParent.children(':first-child');
 
@@ -104,7 +105,8 @@
 
 		this.options.pause == 'hover' && !('ontouchstart' in document.documentElement) && this.$element
 			.on('mouseenter.bs.visorcarousel', $.proxy(this.pause, this))
-			.on('mouseleave.bs.visorcarousel', $.proxy(this.cycle, this));
+			.on('mouseleave.bs.visorcarousel', $.proxy(this.cycle, this))
+		;
 	};
 
 	VisorCarousel.VERSION  = '1.0.0';
@@ -260,6 +262,7 @@
 
 		var $toActive = $item;
 		this.disableControls();
+		this.disableSliding();
 		for (steps=0; steps<distance; steps++) {
 			(function() {
 				var $slide = $lastItem = $($items.get(steps));
@@ -277,8 +280,52 @@
 				focusTo.call(self, $toActive); // selecting new active and make focused in view
 				self.$items = self.$itemsParent.children('.item');
 				self.enableControls();
+				self.enableSliding();
 			}, 250);
 		});
+	};
+
+	VisorCarousel.prototype.select = function(slide, isRelative) {
+		if (this.isSlidingDisabled()) return;
+
+		isRelative = (typeof isRelative == 'boolean'? isRelative : false);
+		var $items = this.$items,
+			$toSlide,
+			activeNth = 0,
+			slideNth = 0,
+			activeIid = 0;
+
+		if ($.isNumeric(slide)) {
+			// numeric slide means iid or relative distance
+			slide = parseInt(slide);
+			if (isRelative) {
+				// by relative distance:
+				activeNth = $items.filter('.active').index() + 1;
+				slideNth = activeNth + slide;
+				if (slideNth < 0) slideNth = 0;
+				if (slideNth > $items.length) slideNth = $items.length;
+			} else {
+				// by iid:
+				activeIid = $items.filter('.active').data('iid');
+				activeNth = $items.filter('.active').index() + 1;
+				if (slide > activeIid) {
+					// stepping forward
+					slideNth = activeNth + slide - activeIid;
+				} else {
+					// stepping backward
+					slideNth = activeNth - activeIid + slide;
+				}
+			}
+			$toSlide = $items.filter(':nth-child(' + slideNth + ')');
+		} else {
+			// non-numeric slide means selector
+			$toSlide = $items.filter(slide);
+		}
+
+		this.$indicators.children('.active').removeClass('active');
+		this.$indicators.children('[data-slide-to=' + $toSlide.data('iid') + ']').addClass('active');
+
+		this.slideTo($toSlide);
 	};
 
 	VisorCarousel.prototype.enableControls = function() {
@@ -305,27 +352,74 @@
 		return this.disabledSliding;
 	};
 
+	VisorCarousel.prototype.prev = function() {
+		this.select(-1, true);
+		return this;
+	};
+
+	VisorCarousel.prototype.next = function() {
+		this.select(1, true);
+		return this;
+	};
+
+	VisorCarousel.prototype.first = function() {
+		this.select(0);
+		return this;
+	};
+
+	VisorCarousel.prototype.last = function() {
+		this.select(this.lastItemIid);
+		return this;
+	};
+
+	VisorCarousel.prototype.pause = function() {
+		this.disableSliding();
+		if (this.slidingTimer) clearInterval(this.slidingTimer);
+		return this;
+	};
+
+	VisorCarousel.prototype.cycle = function() {
+		var self = this;
+		this.enableSliding();
+		this.slidingTimer = setInterval(function() {
+			if (!self.isSlidingDisabled()) self.select(1, true);
+		}, this.options.interval);
+	};
+
 	// VISOR CAROUSEL PLUGIN DEFINITION
 	// ================================
 
 	function Plugin(option) {
 		return this.each(function () {
-			var $this   = $(this);
-			var data    = $this.data('bs.visorcarousel');
-			var options = $.extend({}, VisorCarousel.DEFAULTS, $this.data(), typeof option == 'object' && option);
-			var action  = typeof option == 'string' ? option : options.slide;
+			var $this	= $(this);
+			var obj		= $this.data('bs.visorcarousel');
+			var options	= $.extend({}, VisorCarousel.DEFAULTS, $this.data(), typeof option == 'object' && option);
+			var action	= options.slide || false;
 
-			if (!data) $this.data('bs.visorcarousel', (data = new VisorCarousel(this, options)));
-			if (typeof option == 'number') data.to(option);
-			else if (action) data[action]();
-			else if (options.interval) data.pause().cycle();
+			if (!obj) $this.data('bs.visorcarousel', (obj = new VisorCarousel(this, options)));
+			if ($.isPlainObject(option)) {
+				if (options.slide) {
+					obj[action]();
+				} else {
+					if (typeof options.slideTo != 'undefined' && options.slideTo !== null) {
+						obj.select(options.slideTo, false);
+					} else if (typeof options.slideBy != 'undefined' && options.slideBy !== null) {
+						obj.select(options.slideBy, true);
+					}
+				}
+			}
+			if (options.interval == 0) {
+				obj.pause();
+			} else {
+				obj.pause().cycle();
+			}
 		});
 	}
 
 	var old = $.fn.visorCarousel;
 
-	$.fn.visorCarousel             = Plugin;
-	$.fn.visorCarousel.Constructor = VisorCarousel;
+	$.fn.visorcarousel             = Plugin;
+	$.fn.visorcarousel.Constructor = VisorCarousel;
 
 
 	// VISOR CAROUSEL NO CONFLICT
@@ -346,23 +440,21 @@
 		var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
 		if (!$target.hasClass('visor-carousel')) return;
 		var options = $.extend({}, $target.data(), $this.data());
-		var slideIndex = $this.attr('data-slide-to');
+		var slideIndex = $this.attr('data-slide-to') || $this.attr('data-slide-by') || $this.attr('data-slide') || false;
 		if (slideIndex) options.interval = false;
 
 		Plugin.call($target, options);
-
-		if (slideIndex) {
-			$target.data('bs.visorcarousel').to(slideIndex);
-		}
 
 		e.preventDefault();
 	};
 
 	$(document)
 		.on('click.bs.visorcarousel.data-api', '[data-slide]', clickHandler)
-		.on('click.bs.visorcarousel.data-api', '[data-slide-to]', clickHandler);
+		.on('click.bs.visorcarousel.data-api', '[data-slide-to]', clickHandler)
+		.on('click.bs.visorcarousel.data-api', '[data-slide-by]', clickHandler)
+	;
 
-	$(window).on('load', function () {
+	$(window).on('load.bs.visorcarousel.data-api', function () {
 		$('[data-ride="visor"]').each(function () {
 			var $carousel = $(this);
 			Plugin.call($carousel, $carousel.data());
