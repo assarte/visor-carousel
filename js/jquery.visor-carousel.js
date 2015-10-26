@@ -260,25 +260,24 @@
 
 		var $toActive = $item;
 		this.disableControls();
-		$items.each(function() {
-			if (steps >= distance) {
-				onAnimationEndOnce($lastItem, function() {
-					setTimeout(function() {
-						focusTo.call(self, $toActive); // selecting new active and make focused in view
-						self.enableControls();
-					}, 250);
-				});
-				return false;
-			}
-			var $item = $lastItem = $($items.get(0));
+		for (steps=0; steps<distance; steps++) {
+			(function() {
+				var $slide = $lastItem = $($items.get(steps));
 
-			$item = VisorCarousel.ANIMATIONS[anim].fold(self, $item);
-			if (!isBackward) {
-				$item = VisorCarousel.ANIMATIONS[anim].raise(self, $item.appendTo(self.$itemsParent));
-			} else {
-				$item = VisorCarousel.ANIMATIONS[anim].raise(self, $item.prependTo(self.$itemsParent));
-			}
-			steps++;
+				$slide = VisorCarousel.ANIMATIONS[anim].fold(self, $slide);
+				if (!isBackward) {
+					$slide = VisorCarousel.ANIMATIONS[anim].raise(self, $slide.appendTo(self.$itemsParent));
+				} else {
+					$slide = VisorCarousel.ANIMATIONS[anim].raise(self, $slide.prependTo(self.$itemsParent));
+				}
+			}());
+		}
+		onAnimationEndOnce($lastItem, function() {
+			setTimeout(function() {
+				focusTo.call(self, $toActive); // selecting new active and make focused in view
+				self.$items = self.$itemsParent.children('.item');
+				self.enableControls();
+			}, 250);
 		});
 	};
 
