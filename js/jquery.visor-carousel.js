@@ -108,6 +108,7 @@
 			}, 150);
 		};
 		resizehandler();
+		this.$element.trigger('selected.bs.visorcarousel', [self.$active]);
 		$(window).resize(resizehandler);
 
 		this.options.keyboard && this.$element.on('keydown.bs.visorcarousel', $.proxy(this.keydown, this));
@@ -164,7 +165,7 @@
 	}
 
 	function onAnimationEndOnce($el, cb) {
-		$el.one('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', cb);
+		$el.on('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', cb);
 		return $el;
 	}
 
@@ -197,6 +198,9 @@
 
 		this.$itemsParent.children('.item.active').removeClass('active');
 		self.$active = $item.addClass('active');
+
+		this.$indicators.children('.active').removeClass('active');
+		this.$indicators.children('[data-slide-to=' + $item.data('iid') + ']').addClass('active');
 
 		var isActiveReached = false;
 		this.$itemsParent.children('.item').each(function() {
@@ -269,6 +273,7 @@
 			$items = $($items.get().reverse());
 		}
 
+		this.$element.trigger('slideto.bs.visorcarousel', [self.$active, $item]);
 		var $toActive = $item;
 		this.disableControls();
 		this.disableSliding();
@@ -290,8 +295,11 @@
 				self.$items = self.$itemsParent.children('.item');
 				self.enableControls();
 				self.enableSliding();
+				self.$element.trigger('selected.bs.visorcarousel', [self.$active]);
 			}, 250);
 		});
+
+		return this;
 	};
 
 	VisorCarousel.prototype.select = function(slide, isRelative) {
@@ -299,6 +307,7 @@
 
 		isRelative = (typeof isRelative == 'boolean'? isRelative : false);
 		var $items = this.$items,
+			self = this,
 			$toSlide,
 			activeNth = 0,
 			slideNth = 0,
@@ -331,10 +340,10 @@
 			$toSlide = $items.filter(slide);
 		}
 
-		this.$indicators.children('.active').removeClass('active');
-		this.$active = this.$indicators.children('[data-slide-to=' + $toSlide.data('iid') + ']').addClass('active');
-
+		this.$element.trigger('select.bs.visorcarousel', [this.$active, $toSlide]);
 		this.slideTo($toSlide);
+
+		return this;
 	};
 
 	VisorCarousel.prototype.enableControls = function() {
