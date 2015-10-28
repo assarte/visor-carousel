@@ -117,6 +117,9 @@
 .visor-carousel {
 	position: relative;
 }
+.visor-carousel[data-layout="portrait"] {
+	margin-bottom: 3em;
+}
 
 .visor-carousel .visor-wrapper {
 	width: 100%;
@@ -214,6 +217,10 @@ div.visor-carousel .carousel-indicators {
 	margin: 0;
 	padding: 0;
 	text-align: center;
+}
+
+div.visor-carousel[data-layout="portrait"] .carousel-indicators {
+	bottom: -2em;
 }
 
 div.visor-carousel .carousel-indicators > li {
