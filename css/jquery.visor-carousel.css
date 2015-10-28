@@ -70,9 +70,9 @@
 	border-radius: 0;
 }
 
-.visor-carousel a.carousel-control,
-.visor-carousel a.carousel-control.left,
-.visor-carousel a.carousel-control.right {
+.visor-carousel .carousel-control,
+.visor-carousel .carousel-control.left,
+.visor-carousel .carousel-control.right {
 	background: initial;
 	position: static;
 	top: 0;
@@ -271,4 +271,75 @@ div.visor-carousel .carousel-indicators > li:before {
 	border-radius: 50%;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
 	transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* controls layout */
+.visor-carousel .carousel-control[href],
+.visor-carousel .carousel-control[data-target] {
+	color: rgba(255, 255, 255, 0.75);
+	font-size: 2em;
+	text-shadow: 0 0 1em #000, 0 0 1em #000;
+	text-align: center;
+	display: table;
+	opacity: 0.33;
+	transition: color 0.25s ease, font-size 0.25s ease, text-shadow 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+}
+.visor-carousel .carousel-control[href]:hover,
+.visor-carousel .carousel-control[data-target]:hover {
+	color: rgba(255, 255, 255, 1);
+	font-size: 2.5em;
+	text-shadow: 0 0 1em rgba(255, 255, 255, 1), 0 0 1.5em rgba(255, 255, 255, 1), 0 0 2em rgba(255, 255, 255, 1), 0 0 3em rgba(255, 255, 255, 1);
+	opacity: 0.75;
+}
+.visor-carousel .carousel-control > *,
+.visor-carousel .carousel-control > .glyphicon,
+.visor-carousel .carousel-control > .glyphicon.glyphicon-chevron-left,
+.visor-carousel .carousel-control > .glyphicon.glyphicon-chevron-right
+{
+	display: table-cell;
+	vertical-align: middle;
+}
+.visor-carousel .carousel-control.left {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 50px;
+	width: 8.6666666%;
+	height: 100%;
+	border-top-right-radius: 50%;
+	border-bottom-right-radius: 50%;
+	background: rgba(0, 0, 0, 0.4);
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,8f8f8f+30,363636+40,8a8a8a+100&0.4+0,0.4+100 */
+	background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(143, 143, 143, 0.4) 30%, rgba(54, 54, 54, 0.4) 40%, rgba(138, 138, 138, 0.4) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(30%, rgba(143, 143, 143, 0.4)), color-stop(40%, rgba(54, 54, 54, 0.4)), color-stop(100%, rgba(138, 138, 138, 0.4))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(143, 143, 143, 0.4) 30%, rgba(54, 54, 54, 0.4) 40%, rgba(138, 138, 138, 0.4) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(143, 143, 143, 0.4) 30%, rgba(54, 54, 54, 0.4) 40%, rgba(138, 138, 138, 0.4) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(143, 143, 143, 0.4) 30%, rgba(54, 54, 54, 0.4) 40%, rgba(138, 138, 138, 0.4) 100%); /* IE10+ */
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(143, 143, 143, 0.4) 30%, rgba(54, 54, 54, 0.4) 40%, rgba(138, 138, 138, 0.4) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000', endColorstr='#668a8a8a', GradientType=1); /* IE6-9 */
+}
+.visor-carousel .carousel-control.left:hover {
+	box-shadow: 0.05em 0.05em 0.5em rgba(0, 0, 0, 0.6);
+}
+.visor-carousel .carousel-control.right {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 50px;
+	width: 8.6666666%;
+	height: 100%;
+	border-top-left-radius: 50%;
+	border-bottom-left-radius: 50%;
+	background: rgba(0, 0, 0, 0.4);
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8a8a8a+0,363636+60,8f8f8f+70,000000+100&0.4+0,0.4+100 */
+	background: -moz-linear-gradient(left, rgba(138,138,138,0.4) 0%, rgba(54,54,54,0.4) 60%, rgba(143,143,143,0.4) 70%, rgba(0,0,0,0.4) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(138,138,138,0.4)), color-stop(60%,rgba(54,54,54,0.4)), color-stop(70%,rgba(143,143,143,0.4)), color-stop(100%,rgba(0,0,0,0.4))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* IE10+ */
+	background: linear-gradient(to right, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#668a8a8a', endColorstr='#66000000',GradientType=1 ); /* IE6-9 */
+}
+.visor-carousel .carousel-control.right:hover {
+	box-shadow: -0.05em 0.05em 0.5em rgba(0, 0, 0, 0.6);
 }

@@ -329,10 +329,12 @@
 	};
 
 	VisorCarousel.prototype.enableControls = function() {
+		this.$element.find('[data-slide], [data-slide-to], [data-slide-by]').removeClass('disabled');
 		this.disabledControls = false;
 	};
 
 	VisorCarousel.prototype.disableControls = function () {
+		this.$element.find('[data-slide], [data-slide-to], [data-slide-by]').addClass('disabled');
 		this.disabledControls = true;
 	};
 
