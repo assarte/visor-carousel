@@ -360,7 +360,6 @@
 	};
 
 	VisorCarousel.prototype.isSlidingDisabled = function() {
-		if (this._userAction) return false;
 		return (this.options.interval == 0) || this.disabledSliding;
 	};
 
@@ -385,17 +384,31 @@
 	};
 
 	VisorCarousel.prototype.pause = function() {
-		this.disableSliding();
 		if (this.slidingTimer) clearInterval(this.slidingTimer);
 		return this;
 	};
 
 	VisorCarousel.prototype.cycle = function() {
 		var self = this;
-		this.enableSliding();
 		this.slidingTimer = setInterval(function() {
 			if (!self.isSlidingDisabled()) self.select(1, true);
 		}, this.options.interval);
+		return this;
+	};
+
+	VisorCarousel.prototype.setInterval = function (interval) {
+		var self = this;
+
+		if (this.slidingTimer) clearInterval(this.slidingTimer);
+		this.options.interval = interval;
+
+		if (this.options.interval == 0) return this;
+
+		this.slidingTimer = setInterval(function() {
+			if (!self.isSlidingDisabled()) self.select(1, true);
+		}, this.options.interval);
+
+		return this;
 	};
 
 	// VISOR CAROUSEL PLUGIN DEFINITION
@@ -420,7 +433,6 @@
 					}
 				}
 			}
-			obj._userAction = false;
 			if (options.interval == 0) {
 				obj.pause();
 			} else {
@@ -456,7 +468,7 @@
 		var slideIndex = $this.attr('data-slide-to') || $this.attr('data-slide-by') || $this.attr('data-slide') || false;
 		if (slideIndex) options.interval = false;
 
-		$target.data('bs.visorcarousel')._userAction = true;
+		$target.data('bs.visorcarousel').pause();
 		Plugin.call($target, options);
 
 		e.preventDefault();
