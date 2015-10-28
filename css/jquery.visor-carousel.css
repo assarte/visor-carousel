@@ -20,19 +20,9 @@
 	width: initial;
 	overflow: initial;
 }
-.visor-carousel div.carousel-caption {
-	position: static;
-	width: initial;
+
+.visor-carousel .carousel-caption {
 	overflow: initial;
-	top: initial;
-	left: initial;
-	right: initial;
-	bottom: initial;
-	z-index: initial;
-	padding: 0;
-	color: inherit;
-	text-align: initial;
-	text-shadow: initial;
 }
 
 .visor-carousel .carousel-indicators {
@@ -90,7 +80,7 @@
 
 .visor-carousel .carousel-control .icon-next,
 .visor-carousel .carousel-control .icon-prev {
-	display: block;
+	display: inline-block;
 	position: static;
 	top: initial;
 	left: initial;
@@ -139,67 +129,43 @@
 }
 .visor-carousel .visor-wrapper > .carousel-inner {
 	position: relative;
-	width: initial;
+	width: 100%;
 	display: block;
 	white-space: normal;
 	overflow: visible;
 	transition: top 0.3s ease-in-out, left 0.3s ease-in-out, right 0.3s ease-in-out, bottom 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, border-width 0.3s ease-in-out, outline-width 0.3s ease-in-out;
 }
 @media (min-width: 768px) {
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-sm .visor-wrapper > .carousel-inner,
 	.visor-carousel.col-sm .visor-wrapper > .carousel-inner {
 		display: inline-block;
 		white-space: nowrap;
 	}
+	.visor-carousel.col-sm .visor-wrapper > .carousel-inner > .item {
+		display: inline-block;
+	}
 }
 @media (min-width: 992px) {
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-md .visor-wrapper > .carousel-inner,
 	.visor-carousel.col-md .visor-wrapper > .carousel-inner {
 		display: inline-block;
 		white-space: nowrap;
 	}
+	.visor-carousel.col-md .visor-wrapper > .carousel-inner > .item {
+		display: inline-block;
+	}
 }
 @media (min-width: 1200px) {
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
-	.visor-carousel.col-lg .visor-wrapper > .carousel-inner,
 	.visor-carousel.col-lg .visor-wrapper > .carousel-inner {
 		display: inline-block;
 		white-space: nowrap;
+	}
+	.visor-carousel.col-lg .visor-wrapper > .carousel-inner > .item {
+		display: inline-block;
 	}
 }
 
 .visor-carousel .carousel-inner > div.item,
 .visor-carousel .carousel-inner > div.item.active {
-	display: inline-block;
+	display: block;
 	overflow: hidden;
 	white-space: normal;
 	float: none;
@@ -213,22 +179,22 @@
 	transition: width 0.6s ease-in-out, height 0.6s ease-in-out, padding 0.6s ease-in-out, margin 0.6s ease-in-out, border-width 0.6s ease-in-out, outline-width 0.6s ease-in-out;
 }
 .visor-carousel[data-layout="landscape"] .visor-wrapper > .carousel-inner > .item.anim-flip-in-out.fold {
-	width: 0;
-	padding-left: 0;
-	padding-right: 0;
-	margin-left: 0;
-	margin-right: 0;
-	border-left-width: 0;
-	border-right-width: 0;
+	width: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	border-left-width: 0 !important;
+	border-right-width: 0 !important;
 }
 .visor-carousel[data-layout="portrait"] .visor-wrapper > .carousel-inner > .item.anim-flip-in-out.fold {
-	height: 0;
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-top: 0;
-	margin-bottom: 0;
-	border-top-width: 0;
-	border-bottom-width: 0;
+	height: 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	border-top-width: 0 !important;
+	border-bottom-width: 0 !important;
 }
 .visor-carousel .visor-wrapper > .carousel-inner .item.quick {
 	transition: all 0s ease; /* override animation */
@@ -240,7 +206,7 @@ div.visor-carousel .carousel-indicators {
 	list-style: none;
 	position: absolute;
 	z-index: 2;
-	bottom: 3em;
+	bottom: 2em;
 	left: 50%;
 	transform: translate(-50%, 0);
 	width: auto;
@@ -282,6 +248,7 @@ div.visor-carousel .carousel-indicators > li:before {
 	text-align: center;
 	display: table;
 	opacity: 0.33;
+	z-index: 3;
 	transition: color 0.25s ease, font-size 0.25s ease, text-shadow 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
 }
 .visor-carousel .carousel-control[href]:hover,
@@ -292,6 +259,8 @@ div.visor-carousel .carousel-indicators > li:before {
 	opacity: 0.75;
 }
 .visor-carousel .carousel-control > *,
+.visor-carousel .carousel-control > .icon-prev,
+.visor-carousel .carousel-control > .icon-next,
 .visor-carousel .carousel-control > .glyphicon,
 .visor-carousel .carousel-control > .glyphicon.glyphicon-chevron-left,
 .visor-carousel .carousel-control > .glyphicon.glyphicon-chevron-right
@@ -299,7 +268,21 @@ div.visor-carousel .carousel-indicators > li:before {
 	display: table-cell;
 	vertical-align: middle;
 }
-.visor-carousel .carousel-control.left {
+/*  layout-landscape */
+.visor-carousel[data-layout="landscape"] .carousel-control.layout-landscape {
+	display: table;
+}
+.visor-carousel[data-layout="landscape"] .carousel-control.layout-portrait {
+	display: none;
+}
+.visor-carousel[data-layout="portrait"] .carousel-control.layout-landscape {
+	display: none;
+}
+.visor-carousel[data-layout="portrait"] .carousel-control.layout-portrait {
+	display: table;
+}
+
+.visor-carousel .carousel-control.left.layout-landscape {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -318,10 +301,10 @@ div.visor-carousel .carousel-indicators > li:before {
 	background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(143, 143, 143, 0.4) 30%, rgba(54, 54, 54, 0.4) 40%, rgba(138, 138, 138, 0.4) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000', endColorstr='#668a8a8a', GradientType=1); /* IE6-9 */
 }
-.visor-carousel .carousel-control.left:hover {
+.visor-carousel .carousel-control.left.layout-landscape:hover {
 	box-shadow: 0.05em 0.05em 0.5em rgba(0, 0, 0, 0.6);
 }
-.visor-carousel .carousel-control.right {
+.visor-carousel .carousel-control.right.layout-landscape {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -340,6 +323,66 @@ div.visor-carousel .carousel-indicators > li:before {
 	background: linear-gradient(to right, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#668a8a8a', endColorstr='#66000000',GradientType=1 ); /* IE6-9 */
 }
-.visor-carousel .carousel-control.right:hover {
+.visor-carousel .carousel-control.right.layout-landscape:hover {
 	box-shadow: -0.05em 0.05em 0.5em rgba(0, 0, 0, 0.6);
+}
+/*  layout-portrait */
+.visor-carousel .carousel-control.left.layout-portrait {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 50px;
+	height: 8.6666666%;
+	width: 100%;
+	border-bottom-left-radius: 50%;
+	border-bottom-right-radius: 50%;
+	background: rgba(0, 0, 0, 0.4);
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,8f8f8f+30,363636+40,8a8a8a+100&0.4+0,0.4+100 */
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(143,143,143,0.4) 30%, rgba(54,54,54,0.4) 40%, rgba(138,138,138,0.4) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.4)), color-stop(30%,rgba(143,143,143,0.4)), color-stop(40%,rgba(54,54,54,0.4)), color-stop(100%,rgba(138,138,138,0.4))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 0%,rgba(143,143,143,0.4) 30%,rgba(54,54,54,0.4) 40%,rgba(138,138,138,0.4) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0.4) 0%,rgba(143,143,143,0.4) 30%,rgba(54,54,54,0.4) 40%,rgba(138,138,138,0.4) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0.4) 0%,rgba(143,143,143,0.4) 30%,rgba(54,54,54,0.4) 40%,rgba(138,138,138,0.4) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%,rgba(143,143,143,0.4) 30%,rgba(54,54,54,0.4) 40%,rgba(138,138,138,0.4) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#668a8a8a',GradientType=0 ); /* IE6-9 */
+}
+.visor-carousel .carousel-control.left.layout-portrait:hover {
+	box-shadow: 0 0.05em 0.5em rgba(0, 0, 0, 0.6);
+}
+.visor-carousel .carousel-control.right.layout-portrait {
+	position: absolute;
+	top: initial;
+	bottom: 0;
+	left: 0;
+	min-height: 50px;
+	height: 8.6666666%;
+	width: 100%;
+	border-top-left-radius: 50%;
+	border-top-right-radius: 50%;
+	background: rgba(0, 0, 0, 0.4);
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8a8a8a+0,363636+60,8f8f8f+70,000000+100&0.4+0,0.4+100 */
+	background: -moz-linear-gradient(top, rgba(138,138,138,0.4) 0%, rgba(54,54,54,0.4) 60%, rgba(143,143,143,0.4) 70%, rgba(0,0,0,0.4) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(138,138,138,0.4)), color-stop(60%,rgba(54,54,54,0.4)), color-stop(70%,rgba(143,143,143,0.4)), color-stop(100%,rgba(0,0,0,0.4))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(138,138,138,0.4) 0%,rgba(54,54,54,0.4) 60%,rgba(143,143,143,0.4) 70%,rgba(0,0,0,0.4) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#668a8a8a', endColorstr='#66000000',GradientType=0 ); /* IE6-9 */
+}
+.visor-carousel .carousel-control.right.layout-portrait:hover {
+	box-shadow: 0 -0.05em 0.5em rgba(0, 0, 0, 0.6);
+}
+
+/* captions layout */
+.visor-carousel .carousel-caption {
+	position: absolute;
+	width: auto;
+	padding: 0;
+	bottom: 3em;
+	left: 20%;
+	right: 20%;
+	z-index: 2;
+	color: #fff;
+	text-align: center;
+	text-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.6);
 }
