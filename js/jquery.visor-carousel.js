@@ -198,6 +198,9 @@
 		this.$itemsParent.children('.item.active').removeClass('active');
 		self.$active = $item.addClass('active');
 
+		this.$indicators.children('.active').removeClass('active');
+		this.$indicators.children('[data-slide-to=' + $item.data('iid') + ']').addClass('active');
+
 		var isActiveReached = false;
 		this.$itemsParent.children('.item').each(function() {
 			var fn = 'outerHeight',
@@ -269,6 +272,7 @@
 			$items = $($items.get().reverse());
 		}
 
+		this.$element.trigger('slideto.bs.visorcarousel', [self.$active, $item]);
 		var $toActive = $item;
 		this.disableControls();
 		this.disableSliding();
@@ -290,8 +294,11 @@
 				self.$items = self.$itemsParent.children('.item');
 				self.enableControls();
 				self.enableSliding();
+				self.$element.trigger('slidedto.bs.visorcarousel', [self.$active]);
 			}, 250);
 		});
+
+		return this;
 	};
 
 	VisorCarousel.prototype.select = function(slide, isRelative) {
@@ -299,6 +306,7 @@
 
 		isRelative = (typeof isRelative == 'boolean'? isRelative : false);
 		var $items = this.$items,
+			self = this,
 			$toSlide,
 			activeNth = 0,
 			slideNth = 0,
@@ -331,10 +339,16 @@
 			$toSlide = $items.filter(slide);
 		}
 
-		this.$indicators.children('.active').removeClass('active');
-		this.$active = this.$indicators.children('[data-slide-to=' + $toSlide.data('iid') + ']').addClass('active');
-
+		this.$element.trigger('select.bs.visorcarousel', [this.$active, $toSlide]);
 		this.slideTo($toSlide);
+
+		onAnimationEndOnce(this.$active, function() {
+			setTimeout(function() {
+				self.$element.trigger('selected.bs.visorcarousel', [self.$active]);
+			}, 250);
+		});
+
+		return this;
 	};
 
 	VisorCarousel.prototype.enableControls = function() {
