@@ -55,6 +55,11 @@
 			self.lastItemIid = idx;
 		});
 
+		// removing unnecessary white-spaces between items
+		this.$itemsParent.contents().filter(function() {
+			return this.nodeType == 3;
+		}).detach();
+
 		// multiplying items for 'center'-view to balance the list
 		if (this.options.align == 'center' && this.$itemsParent.children('.item').length > 1) {
 			var originalCollection = this.$itemsParent.children('.item'),
@@ -85,6 +90,8 @@
 		// manage viewport resize
 		var isInitialResize = true;
 		var resizehandler = function() {
+			self.disableControls();
+			self.disableSliding();
 			setTimeout(function() {
 				// checking layout after redraw
 				self.layout = getLayout.call(self);
@@ -96,6 +103,8 @@
 					self.enableSliding();
 					isInitialResize = false;
 				}
+				self.enableSliding();
+				self.enableControls();
 			}, 150);
 		};
 		resizehandler();
@@ -187,7 +196,7 @@
 			self = this;
 
 		this.$itemsParent.children('.item.active').removeClass('active');
-		$item.addClass('active');
+		self.$active = $item.addClass('active');
 
 		var isActiveReached = false;
 		this.$itemsParent.children('.item').each(function() {
@@ -323,7 +332,7 @@
 		}
 
 		this.$indicators.children('.active').removeClass('active');
-		this.$indicators.children('[data-slide-to=' + $toSlide.data('iid') + ']').addClass('active');
+		this.$active = this.$indicators.children('[data-slide-to=' + $toSlide.data('iid') + ']').addClass('active');
 
 		this.slideTo($toSlide);
 	};
@@ -352,7 +361,7 @@
 
 	VisorCarousel.prototype.isSlidingDisabled = function() {
 		if (this._userAction) return false;
-		return this.disabledSliding;
+		return (this.options.interval == 0) || this.disabledSliding;
 	};
 
 	VisorCarousel.prototype.prev = function() {
