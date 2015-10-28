@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>Bootstrap 101 Template</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<!-- Visor styles -->
+	<link href="../css/jquery.visor-carousel.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
+		.visor-carousel,
+		.visor-carousel .visor-wrapper,
+		.visor-carousel .carousel-inner > .item,
+		.visor-carousel .carousel-inner > .item > img {
+			height: 250px;
+			cursor: pointer;
+		}
+		.visor-carousel .carousel-inner > .item > img {
+			position: absolute;
+			width: 100%;
+		}
+
+		#selected-item {
+			border: 1px solid #999;
+			border-radius: 10px;
+			position: relative;
+		}
+		#selected-item img {
+			width: 100%;
+			height: 250px;
+		}
+		#selected-item .carousel-caption {
+		}
+	</style>
+</head>
+<body>
+<h1>Visor Carousel event handling</h1>
+<!-- Copied from original: http://getbootstrap.com/examples/carousel/ -->
+<h2>Visor Carousel - col-md-3 items</h2>
+<p>Click on slide to change active element!</p>
+<div id="myVisor3" class="visor-carousel slide" data-ride="visor">
+	<!-- Indicators -->
+	<ol class="carousel-indicators">
+		<li data-target="#myVisor3" data-slide-to="0" class="active"></li>
+		<li data-target="#myVisor3" data-slide-to="1"></li>
+		<li data-target="#myVisor3" data-slide-to="2"></li>
+	</ol>
+	<div class="carousel-inner" role="listbox">
+		<div class="item col-md-3 active" data-slide-to="0" data-target="#myVisor3">
+			<img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+			<div class="container-fluid">
+				<div class="carousel-caption">
+					<h1>Example headline.</h1>
+					<p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+					<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="item col-md-3" data-slide-to="1" data-target="#myVisor3">
+			<img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+			<div class="container-fluid">
+				<div class="carousel-caption">
+					<h1>Another example headline.</h1>
+					<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+					<p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="item col-md-3" data-slide-to="2" data-target="#myVisor3">
+			<img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+			<div class="container-fluid">
+				<div class="carousel-caption">
+					<h1>One more for good measure.</h1>
+					<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+					<p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a class="left carousel-control layout-landscape" href="#myVisor3" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="left carousel-control layout-portrait" href="#myVisor3" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="right carousel-control layout-landscape" href="#myVisor3" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+	<a class="right carousel-control layout-portrait" href="#myVisor3" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+</div><!-- /.visor -->
+
+<h2>Selected item is:</h2>
+<div class="container" id="selected-item"></div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- Adding Visor Carousel -->
+<script src="../js/jquery.visor-carousel.js"></script>
+<!-- Custom event handling -->
+<script>
+	$(function() {
+		$('#myVisor3').on('selected.bs.visorcarousel', function(e, $selected) {
+			$('#selected-item').empty().append($selected.contents().clone());
+		});
+	});
+</script>
+</body>
+</html>

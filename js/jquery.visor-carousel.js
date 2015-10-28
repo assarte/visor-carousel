@@ -108,6 +108,7 @@
 			}, 150);
 		};
 		resizehandler();
+		this.$element.trigger('selected.bs.visorcarousel', [self.$active]);
 		$(window).resize(resizehandler);
 
 		this.options.keyboard && this.$element.on('keydown.bs.visorcarousel', $.proxy(this.keydown, this));
@@ -164,7 +165,7 @@
 	}
 
 	function onAnimationEndOnce($el, cb) {
-		$el.one('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', cb);
+		$el.on('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', cb);
 		return $el;
 	}
 
@@ -294,7 +295,7 @@
 				self.$items = self.$itemsParent.children('.item');
 				self.enableControls();
 				self.enableSliding();
-				self.$element.trigger('slidedto.bs.visorcarousel', [self.$active]);
+				self.$element.trigger('selected.bs.visorcarousel', [self.$active]);
 			}, 250);
 		});
 
@@ -341,12 +342,6 @@
 
 		this.$element.trigger('select.bs.visorcarousel', [this.$active, $toSlide]);
 		this.slideTo($toSlide);
-
-		onAnimationEndOnce(this.$active, function() {
-			setTimeout(function() {
-				self.$element.trigger('selected.bs.visorcarousel', [self.$active]);
-			}, 250);
-		});
 
 		return this;
 	};
