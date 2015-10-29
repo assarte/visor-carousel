@@ -5,8 +5,10 @@ Bootstrap 3 &amp; Font Awesome 4 compatible, modern, HTML5 + CSS3 + jQuery carou
 
 ## What is?
 Visor Carousel is a Bootstrap 3 compatible carousel designed to achieve two main purposes:
+
 1. To create a light-weight carousel which supports multi-item view
 2. Be this as Bootstrap 3 compatible as possible
+
 You can find live demo samples in the project sites: http://assarte.github.io/visor-carousel/
 
 ## Features
