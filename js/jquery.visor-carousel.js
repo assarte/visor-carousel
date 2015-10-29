@@ -173,7 +173,9 @@
 		if (this.$items.length <= 1) {
 			return 'landscape';
 		} else {
-			if (this.$itemsParent.children('.item:first-child').offset().top == this.$itemsParent.children('.item:last-child').offset().top) {
+			var chd1st = this.$itemsParent.children('.item:first-child'),
+				chdLst = this.$itemsParent.children('.item:last-child');
+			if (chdLst.offset().left > chd1st.offset().left) {
 				this.$itemsParent.css({
 					'top': '',
 					'bottom': ''
@@ -369,7 +371,7 @@
 	};
 
 	VisorCarousel.prototype.isSlidingDisabled = function() {
-		return (this.options.interval == 0) || this.disabledSliding;
+		return this.disabledSliding;
 	};
 
 	VisorCarousel.prototype.prev = function() {
@@ -399,6 +401,7 @@
 
 	VisorCarousel.prototype.cycle = function() {
 		var self = this;
+		if (this.options.interval == 0) return;
 		this.slidingTimer = setInterval(function() {
 			if (!self.isSlidingDisabled()) self.select(1, true);
 		}, this.options.interval);
