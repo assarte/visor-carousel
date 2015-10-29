@@ -18,6 +18,15 @@ You can find live demo samples in the project sites: http://assarte.github.io/vi
 * CSS3 animations, event handlers to wait animations/transitions end (no need to hard-code it into the JS source)
 * Able to support multiple animations by adding to `VisorCarousel.ANIMATIONS` (look up the JS code for structure and working - it's very simple!)
 
+## How to?
+
+It's simple:
+```HTML
+<link rel="stylesheet" type="text/css" href=".../assarte-visor-carousel/css/jquery.visor-carousel.css">
+<script type="text/javascript" src=".../assarte-visor-carousel/js/jquery.visor-carousel.js"></script>
+```
+You should replace `...` by your assets path. For production mode you could use minified versions found in the `dist/` folder. I recommend to consult the [samples](http://assarte.github.io/visor-carousel/) for a better knowledge of what kind of additional CSS would be need (maybe, a very few would be necessary). All HTML sources of these samples are found in the `samples/` folder.
+
 ## Bootstrap 3 carousel look-alike example
 ```HTML
 <div id="myVisor" class="visor-carousel slide" data-ride="visor">
