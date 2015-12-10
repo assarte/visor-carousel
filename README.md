@@ -1,3 +1,7 @@
+# REPOSITORY CHANGES!
+
+This repository is no longer maintained, moved to https://github.com/Webapper/visor-carousel for helping my OS projects to be organized better! I apologies your inconvenience.
+
 # Visor Carousel
 Bootstrap 3 &amp; Font Awesome 4 compatible, modern, HTML5 + CSS3 + jQuery carousel
 
